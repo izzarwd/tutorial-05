@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+	<head>
+		<title>List Flight</title>
+	</head>
+	<body>
+		<h3>Daftar Penerbangan</h3>
+		<table border>
+			<tr>
+				<th>Flight Number</th>
+				<th>Origin</th>
+				<th>Destination</th>
+				<th>Time</th>
+				<th>Pilot</th>
+				<th>License Number</th>
+			</tr>
+			<tr th:each="flight : ${flight}">
+				<td th:text="${flight.flightNumber}"></td>
+				<td th:text="${flight.origin}"></td>
+				<td th:text="${flight.destination}"></td>
+				<td th:text="${flight.time}"></td>
+				<td th:text="${flight.pilot.name}"></td>
+				<td th:text="${flight.pilot.licenseNumber}"></td>
+			</tr>
+		</table>
+	</body>
+</html>

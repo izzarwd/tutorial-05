@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+	<head>
+		<title>Edit Flight</title>
+	</head>
+	<body>
+		<h2>Welcome!</h2>
+
+		<h3>Edit Penerbangan</h3>
+		<form th:action="@{/flight/edit}" th:object="${flight}" method="POST">
+			<input type="hidden" th:field="${flight.id}"/>
+			<input type="hidden" th:field="*{pilot}"/>
+			Flight Number: <br>
+			<input type="text" th:field="*{flightNumber}"/> <br>
+			Origin: <br>
+			<input type="text" th:field="*{origin}"/> <br>
+			Destination: <br>
+			<input type="text" th:field="*{destination}"/> <br>
+			Time: <br>
+			<input type="date" th:field="*{time}"/> <br><br>
+			<button type="submit">Update</button>
+		</form>
+	</body>
+</html>

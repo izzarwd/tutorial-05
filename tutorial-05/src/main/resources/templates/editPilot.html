@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+	<head>
+		<title>Edit Pilot</title>
+	</head>
+	<body>
+		<h2>Welcome!</h2>
+
+		<h3>Edit Pilot</h3>
+		<form th:action="@{/pilot/edit}" th:object="${pilot}" method="POST">
+			<input type="hidden" th:field="${pilot.id}"/>
+			<input type="hidden" th:field="${pilot.licenseNumber}"/>
+			Name: <br>
+			<input type="text" th:field="*{name}"/> <br>
+			Fly Hour: <br>
+			<input type="number" th:field="*{flyHour}"/> <br><br>
+			<button type="submit">Update</button>
+		</form>
+	</body>
+</html>
