@@ -61,9 +61,7 @@
 				<button type="submit">Delete Selected Flight</button>
 			</form>
 			<br>
-			<form th:action="@{/flight/add/}+${pilot.licenseNumber}">
-				<button value="submit">Add Flight</button>
-			</form>
+			<a th:href="@{/flight/add/__${pilot.licenseNumber}__}">Add Flight</a><br>
 			</div>
 	</body>
 </html>

@@ -1,10 +1,12 @@
 package com.apap.tu05.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +32,41 @@ public class FlightController {
 	private String add(@PathVariable(value = "licenseNumber") String licenseNumber, Model model) {
 		FlightModel flight = new FlightModel();
 		PilotModel pilot = pilotService.getPilotDetailByLicenseNumber(licenseNumber);
+		
+		ArrayList<FlightModel> pilotFlight = new ArrayList<>();
+		
+		pilotFlight.add(flight);
+		pilot.setPilotFlight(pilotFlight);
 		flight.setPilot(pilot);
+		
+		String pageTitle = "Add Flight";
+		
+		model.addAttribute("pageTitle", pageTitle);
+		model.addAttribute("pilot", pilot);
 		model.addAttribute("flight", flight);
+		
 		return "addFlight";
 	}
-	
-	@RequestMapping(value = "/flight/add", method = RequestMethod.POST)
-	private String addFlightSubmit(@ModelAttribute FlightModel flight) {
-		flightService.addFlight(flight);
+
+	@RequestMapping(value = "/flight/add", method = RequestMethod.POST, params = { "addFlight" })
+	private String addRow(@ModelAttribute PilotModel pilot, BindingResult bindingResult, Model model) {
+		FlightModel flightBaru = new FlightModel();
+		
+		pilot.getPilotFlight().add(flightBaru);
+		
+		model.addAttribute("pilot", pilot);
+		
+		return "addFlight";
+	}
+
+	@RequestMapping(value = "/flight/add", method = RequestMethod.POST, params = { "submit" })
+	private String addFlightSubmit(@ModelAttribute PilotModel pilot) {
+		PilotModel currentPilot = pilotService.getPilotDetailByLicenseNumber(pilot.getLicenseNumber());
+		
+		for (FlightModel flight : pilot.getPilotFlight()) {
+			flight.setPilot(currentPilot);
+			flightService.addFlight(flight);
+		}
 		return "add";
 	}
 	
